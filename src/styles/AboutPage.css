@@ -1,0 +1,21 @@
+/* src/pages/AboutPage.css */
+.about-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+}
+
+.about-content {
+    flex: 1;
+    margin-right: 50px;
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.about-image img {
+    max-width: 100%;
+    height: auto;
+}
