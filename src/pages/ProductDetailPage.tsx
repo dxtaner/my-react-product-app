@@ -14,7 +14,15 @@ const ProductDetailPage: React.FC = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
+        if (id === undefined) {
+          console.error("ID is undefined");
+          return;
+        }
         const productId = parseInt(id);
+        if (isNaN(productId)) {
+          console.error("ID is not a valid number");
+          return;
+        }
         const fetchedProduct = await getProductById(productId);
         setProduct(fetchedProduct);
       } catch (error) {
@@ -23,10 +31,6 @@ const ProductDetailPage: React.FC = () => {
     };
 
     fetchProductDetails();
-
-    return () => {
-      setProduct(null);
-    };
   }, [id]);
 
   const handleImageClick = (image: string) => {
