@@ -33,21 +33,13 @@ const ProductListPage: React.FC = () => {
     try {
       let productList: Product[] = [];
 
-      let data: { products?: Product[] } = {};
-
       if (selectedCategory) {
-        data = await getProductsByCategory(selectedCategory);
+        productList = await getProductsByCategory(selectedCategory);
       } else if (searchQuery) {
-        data = await searchProducts(searchQuery);
+        productList = await searchProducts(searchQuery);
       } else {
-        data = await getProductList();
+        productList = await getProductList();
       }
-
-      if (!Array.isArray(data.products)) {
-        throw new Error("Product list is not an array");
-      }
-
-      productList = data.products;
 
       setProducts(productList);
       setLoading(false);

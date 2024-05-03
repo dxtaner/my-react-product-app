@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Product } from "../utils/Product.ts";
-import { getProductList } from "../services/productService.ts";
+import { Product } from "../utils/Product";
+import { getProductList } from "../services/productService";
 import ProductTableHeader from "../components/ProductsTable/ProductTableHeader";
 import ProductTableRow from "../components/ProductsTable/ProductTableRow";
 import "../styles/ProductListTablePage.css";
@@ -16,7 +16,7 @@ const ProductListTablePage: React.FC = () => {
   const fetchProducts = async () => {
     try {
       const productList = await getProductList();
-      setProducts(productList.products);
+      setProducts(productList);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching products:", error);
