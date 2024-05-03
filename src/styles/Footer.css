@@ -1,0 +1,28 @@
+/* src/components/Footer.css */
+.footer {
+    background-color: lightgrey;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.github-link {
+    margin-left: 20px;
+}
+
+.github-link a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+}
+
+.github-icon {
+    margin-right: 5px;
+}
