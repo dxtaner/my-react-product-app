@@ -1,10 +1,13 @@
+// productService.ts
 import { Product } from "../utils/Product";
+import { ProductResponse } from "../utils/ProductResponse";
 
-const BASE_URL = "https://dummyjson.com";
+export const BASE_URL = "https://dummyjson.com";
 
 const fetchData = async <T>(url: string): Promise<T> => {
   try {
     const response = await fetch(url);
+
     if (!response.ok) {
       throw new Error(`Failed to fetch data from ${url}`);
     }
@@ -16,13 +19,23 @@ const fetchData = async <T>(url: string): Promise<T> => {
 };
 
 export const getProductList = async (): Promise<Product[]> => {
-  return fetchData<Product[]>(`${BASE_URL}/products`);
+  const url = `${BASE_URL}/products`;
+  const data: ProductResponse = await fetchData<ProductResponse>(url);
+  return data.products;
 };
 
 export const getProductById = async (
   productId: number
 ): Promise<Product | null> => {
-  return fetchData<Product>(`${BASE_URL}/products/${productId}`);
+  const url = `${BASE_URL}/products/${productId}`;
+
+  try {
+    const data: Product = await fetchData<Product>(url);
+    return data;
+  } catch (error) {
+    console.error(`Error fetching data from ${url}:`, error);
+    return null;
+  }
 };
 
 export const searchProducts = async (query: string): Promise<Product[]> => {
@@ -32,15 +45,20 @@ export const searchProducts = async (query: string): Promise<Product[]> => {
     url += `/search?q=${encodeURIComponent(query)}`;
   }
 
-  return fetchData<Product[]>(url);
+  const data: ProductResponse = await fetchData<ProductResponse>(url);
+  return data.products;
 };
 
 export const getProductCategories = async (): Promise<string[]> => {
-  return fetchData<string[]>(`${BASE_URL}/products/categories`);
+  const url = `${BASE_URL}/products/categories`;
+  const data: string[] = await fetchData<string[]>(url);
+  return data;
 };
 
 export const getProductsByCategory = async (
   category: string
 ): Promise<Product[]> => {
-  return fetchData<Product[]>(`${BASE_URL}/products/category/${category}`);
+  const url = `${BASE_URL}/products/category/${category}`;
+  const data: ProductResponse = await fetchData<ProductResponse>(url);
+  return data.products;
 };
