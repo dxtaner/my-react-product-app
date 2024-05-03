@@ -1,5 +1,5 @@
 // PropsProduct.ts
-import { Product } from "./types";
+import { Product } from "./Product";
 
 interface PropsProduct {
   product: Product;

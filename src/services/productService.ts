@@ -1,4 +1,4 @@
-import { Product } from "../utils/types";
+import { Product } from "../utils/Product";
 
 const BASE_URL = "https://dummyjson.com";
 

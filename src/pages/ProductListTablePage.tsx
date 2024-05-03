@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Product } from "../utils/types";
+import { Product } from "../utils/Product.ts";
 import { getProductList } from "../services/productService.ts";
 import ProductTableHeader from "../components/ProductsTable/ProductTableHeader";
 import ProductTableRow from "../components/ProductsTable/ProductTableRow";

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Product } from "../utils/types";
+import { Product } from "../utils/Product.ts";
 import {
   getProductList,
   searchProducts,

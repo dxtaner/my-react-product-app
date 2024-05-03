@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Product } from "../utils/types";
+import { Product } from "../utils/Product.ts";
 import { getProductById } from "../services/productService.ts";
 import ProductInfoDetail from "../components/ProductDetail/ProductInfoDetail";
 import EnlargedImageViewer from "../components/ProductDetail/EnlargedImageViewer";
