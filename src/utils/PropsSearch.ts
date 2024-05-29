@@ -1,7 +1,7 @@
 interface PropsSearch {
   searchQuery: string;
   selectedCategory: string | null;
-  categories: { slug: string; name: string; url: string }[];
+  categories: string[];
   handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleCategoryChange: (category: string) => void;
 }
