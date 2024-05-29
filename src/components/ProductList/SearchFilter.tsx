@@ -20,10 +20,12 @@ const SearchFilter: React.FC<PropsSearch> = ({
       <select
         value={selectedCategory || ""}
         onChange={(e) => handleCategoryChange(e.target.value)}>
-        <option value="">All Categories</option>
-        {categories.map((category, index) => (
-          <option key={index} value={category}>
-            {category}
+        <option key="" value="">
+          All Categories
+        </option>
+        {categories.map((category) => (
+          <option key={category.slug} value={category.slug}>
+            {category.name}
           </option>
         ))}
       </select>

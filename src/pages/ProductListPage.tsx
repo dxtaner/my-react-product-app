@@ -1,35 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { Product } from "../utils/Product.ts";
+import { Product } from "../utils/Product";
 import {
   getProductList,
   searchProducts,
   getProductCategories,
   getProductsByCategory,
-} from "../services/productService.ts";
+} from "../services/productService";
 import SearchFilter from "../components/ProductList/SearchFilter";
 import ProductItem from "../components/ProductList/ProductItem";
 import "../styles/ProductListPage.css";
 
+interface Category {
+  slug: string;
+  name: string;
+  url: string;
+}
+
 const ProductListPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [notFound, setNotFound] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchProducts();
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    fetchProducts();
+    fetchInitialData();
   }, [selectedCategory, searchQuery]);
 
-  const fetchProducts = async () => {
+  const fetchInitialData = async () => {
     setLoading(true);
     setNotFound(false);
+    setError(null);
     try {
       let productList: Product[] = [];
 
@@ -49,16 +52,21 @@ const ProductListPage: React.FC = () => {
       }
     } catch (error) {
       console.error("Error fetching products:", error);
+      setError("Error fetching products. Please try again later.");
       setLoading(false);
     }
+
+    fetchCategories();
   };
 
   const fetchCategories = async () => {
     try {
-      const categoryList = await getProductCategories();
+      const categoryList = (await getProductCategories()) as Category[];
+
       setCategories(categoryList);
     } catch (error) {
       console.error("Error fetching categories:", error);
+      setError("Error fetching categories. Please try again later.");
     }
   };
 
@@ -85,9 +93,7 @@ const ProductListPage: React.FC = () => {
 
       <div className="product-list-container">
         {loading && <div className="loading">Loading...</div>}
-        {!loading && notFound && (
-          <div className="not-found">No products found.</div>
-        )}
+        {error && <div className="error">{error}</div>}
         {!loading && !notFound && (
           <ul className="product-list">
             {products.map((product) => (
@@ -98,6 +104,9 @@ const ProductListPage: React.FC = () => {
               />
             ))}
           </ul>
+        )}
+        {!loading && notFound && (
+          <div className="not-found">No products found.</div>
         )}
       </div>
     </div>

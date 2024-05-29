@@ -1,4 +1,4 @@
-// PropsProductItem.ts
+// src/utils/PropsProductItem.ts
 import { Product } from "./Product";
 
 interface PropsProductItem {
