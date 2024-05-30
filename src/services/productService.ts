@@ -49,10 +49,30 @@ export const searchProducts = async (query: string): Promise<Product[]> => {
   return data.products;
 };
 
-export const getProductCategories = async (): Promise<string[]> => {
-  const url = `${BASE_URL}/products/categories`;
-  const data: string[] = await fetchData<string[]>(url);
-  return data;
+interface Category {
+  slug: string;
+  name: string;
+  url: string;
+}
+
+export const getProductCategories = async (): Promise<Category[]> => {
+  try {
+    const response = await fetch(`${BASE_URL}/products/categories`);
+    if (!response.ok) {
+      throw new Error("Kategoriler alınamadı.");
+    }
+    const data = await response.json();
+    const categoryList: Category[] = data.map((categoryData: Category) => ({
+      slug: categoryData.slug,
+      name: categoryData.name,
+      url: categoryData.url,
+    }));
+
+    return categoryList;
+  } catch (error) {
+    console.error("Kategoriler alınırken bir hata oluştu:", error);
+    return [];
+  }
 };
 
 export const getProductsByCategory = async (

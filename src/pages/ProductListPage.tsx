@@ -12,9 +12,15 @@ import "../styles/ProductListPage.css";
 
 interface ProductListPageProps {}
 
+interface Category {
+  slug: string;
+  name: string;
+  url: string;
+}
+
 const ProductListPage: React.FC<ProductListPageProps> = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
@@ -57,16 +63,15 @@ const ProductListPage: React.FC<ProductListPageProps> = () => {
 
   const fetchCategories = async () => {
     try {
-      const categoryList: string[] = await getProductCategories();
+      const categoryList: Category[] = await getProductCategories();
       setCategories(categoryList);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
   };
 
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-    setSearchQuery("");
+  const handleCategoryChange = async (categorySlug: string) => {
+    setSelectedCategory(categorySlug !== "" ? categorySlug : null);
   };
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +89,6 @@ const ProductListPage: React.FC<ProductListPageProps> = () => {
         handleSearch={handleSearch}
         handleCategoryChange={handleCategoryChange}
       />
-
       <div className="product-list-container">
         {loading && <div className="loading">Loading...</div>}
         {!loading && notFound && (
